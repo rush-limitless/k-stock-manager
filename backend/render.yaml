@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: k-stock-api
+    runtime: node
+    region: frankfurt
+    plan: free
+    branch: main
+    rootDir: backend
+
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+
+    healthCheckPath: /api/auth/login
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: DATABASE_URL
+        sync: false   # À renseigner manuellement dans le dashboard Render
+
+      - key: JWT_SECRET
+        generateValue: true   # Render génère une valeur aléatoire sécurisée automatiquement
+
+      - key: PORT
+        value: 10000   # Port par défaut Render (écrasé dynamiquement par Render)

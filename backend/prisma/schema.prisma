@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  USER
+}
+
+enum MvtType {
+  IN
+  OUT
+  ADJUST
+}
+
+enum TxType {
+  REVENUE
+  EXPENSE
+}
+
+model User {
+  id        String          @id @default(uuid())
+  email     String          @unique
+  password  String
+  name      String
+  role      Role            @default(USER)
+  movements StockMovement[]
+  createdAt DateTime        @default(now())
+}
+
+model Location {
+  id       String     @id @default(uuid())
+  name     String
+  parentId String?
+  parent   Location?  @relation("SubLocations", fields: [parentId], references: [id])
+  children Location[] @relation("SubLocations")
+  products Product[]
+}
+
+model Product {
+  id         String          @id @default(uuid())
+  name       String
+  sku        String          @unique
+  barcode    String?         @unique
+  buyPrice   Float
+  sellPrice  Float
+  stockQty   Int             @default(0)
+  minStock   Int             @default(5)
+  locationId String
+  location   Location        @relation(fields: [locationId], references: [id])
+  movements  StockMovement[]
+  createdAt  DateTime        @default(now())
+}
+
+model StockMovement {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      MvtType
+  quantity  Int
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model Transaction {
+  id       String   @id @default(uuid())
+  type     TxType
+  amount   Float
+  category String
+  note     String?
+  date     DateTime @default(now())
+}
