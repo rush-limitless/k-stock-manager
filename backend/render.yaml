@@ -17,10 +17,10 @@ services:
         value: production
 
       - key: DATABASE_URL
-        sync: false   # À renseigner manuellement dans le dashboard Render
+        value: postgresql://neondb_owner:npg_v02BtsOxYEAW@ep-falling-rice-allkujt0-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 
       - key: JWT_SECRET
-        generateValue: true   # Render génère une valeur aléatoire sécurisée automatiquement
+        value: ohdrvT03nRSpbEFjlkGZkIycQtH75Bt5WTjK/HP0ICs=
 
       - key: PORT
-        value: 10000   # Port par défaut Render (écrasé dynamiquement par Render)
+        value: 10000
