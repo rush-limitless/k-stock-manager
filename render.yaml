@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: k-stock-api
+    runtime: node
+    region: frankfurt
+    plan: free
+    branch: main
+    rootDir: backend
+
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+
+    healthCheckPath: /api/auth/login
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_v02BtsOxYEAW@ep-falling-rice-allkujt0-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+      - key: JWT_SECRET
+        value: ohdrvT03nRSpbEFjlkGZkIycQtH75Bt5WTjK/HP0ICs=
+
+      - key: PORT
+        value: 10000
