@@ -8,6 +8,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.setGlobalPrefix('api');
+  app.enableCors();
+
+  // Health check endpoint
+  const httpAdapter = app.getHttpAdapter();
+  httpAdapter.get('/api/health', (_req: any, res: any) => res.json({ status: 'ok' }));
 
   const config = new DocumentBuilder()
     .setTitle('K-Stock Manager API')
