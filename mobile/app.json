@@ -24,7 +24,10 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "permissions": ["android.permission.CAMERA"]
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,8 +35,16 @@
     "plugins": [
       [
         "expo-camera",
-        { "cameraPermission": "K-Stock a besoin de la caméra pour scanner les codes-barres." }
+        {
+          "cameraPermission": "K-Stock a besoin de la caméra pour scanner les codes-barres."
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "afb8f812-56d9-4a42-84a8-68d6742b683e"
+      }
+    },
+    "owner": "rush_limitless"
   }
 }
